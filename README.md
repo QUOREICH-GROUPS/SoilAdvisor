@@ -1,259 +1,86 @@
-# SoilAdvisor
-Parfait 💪 voici le **README complet et structuré** que tu pourras utiliser dans ton **GitHub**.
-Il explique comment organiser ton projet en **3 parties (Frontend, Backend, AI)**, comment les **collaborateurs travaillent**, et comment faire le **merge final**.
+🧩 1️⃣ FRONTEND — frontend/README.md
+# 🌿 AgriSense Frontend — Interface Utilisateur Interactive
+
+## 🎯 Objectif
+Développer une interface moderne, intuitive et responsive pour permettre aux agriculteurs et techniciens de :
+- Visualiser les parcelles agricoles sur carte interactive
+- Délimiter, annoter et extraire les informations de sol (chimique, physique)
+- Suivre les recommandations et indicateurs générés par l’IA
 
 ---
 
-# 🌾 AgriSense — Plateforme d’Analyse et d’Optimisation Agricole
-
-### 🚀 Description générale
-
-**AgriSense** est une plateforme open-source pour l’analyse, la visualisation et la recommandation intelligente dans le domaine agricole.
-Elle combine **cartographie interactive**, **analyse de données spatiales**, **machine learning**, et **LLM fine-tuné** pour offrir des recommandations agronomiques aux producteurs.
-
----
-
-## 🧩 Architecture Globale
-
-```
-Frontend (React + TS + Tailwind)
-        ↓
-Backend (FastAPI + Postgres/PostGIS)
-        ↓
-AI/ML Engine (Python, ML, LLM)
-```
+## ⚙️ Stack Technique
+- **React.js + TypeScript**
+- **TailwindCSS** pour le style moderne
+- **Leaflet.js / MapLibre GL** pour la cartographie
+- **Axios** pour les appels API
+- **Vite** pour le build rapide
+- **Recharts / Chart.js** pour les indicateurs graphiques
 
 ---
 
-## 👥 Organisation du projet (3 responsables)
+## 📁 Structure du projet
 
-### 1. **FRONTEND — Responsable Interface Utilisateur**
 
-**Objectif :** Créer une interface moderne, intuitive et interactive pour les utilisateurs (agriculteurs, techniciens, chercheurs).
+src/
+├── components/ # UI réutilisables (boutons, cartes, graphiques)
+├── pages/ # Écrans principaux (Dashboard, Carte, Profil)
+├── hooks/ # Hooks personnalisés (useMap, useAuth)
+├── services/ # Appels API vers backend et IA
+├── types/ # Définition des types TS
+├── App.tsx # Point d’entrée React
+└── main.tsx
 
-#### 🛠️ Outils :
-
-* **React.js + TypeScript**
-* **TailwindCSS**
-* **Leaflet.js / MapLibre** pour la cartographie interactive
-* **Axios** pour la communication API
-* **Recharts / Chart.js** pour les indicateurs
-* **Vite** (build rapide)
-
-#### 🎯 Fonctionnalités :
-
-* Authentification (JWT)
-* Tableau de bord (indicateurs, tendances)
-* Carte interactive :
-
-  * Délimiter une parcelle
-  * Plotter des points
-  * Extraire les infos (composition chimique, physique)
-  * Cliquer pour lire les analyses et historiques
-* Section “Recommandations” :
-
-  * Conseils d’irrigation, fertilisation, etc.
-  * Téléchargement de rapports PDF
-
-📁 **Structure du dossier**
-
-```
-frontend/
-│── src/
-│   ├── components/
-│   ├── pages/
-│   ├── services/
-│   ├── hooks/
-│   ├── types/
-│   ├── App.tsx
-│   └── main.tsx
-│── package.json
-│── tailwind.config.js
-│── tsconfig.json
-```
 
 ---
 
-### 2. **BACKEND — Responsable Données & Services**
+## 🧭 Fonctionnalités principales
 
-**Objectif :** Gérer la base de données, les APIs et l’intégration des sources (satellite, import, etc.).
+### 🗺️ Carte interactive (Leaflet / MapLibre)
+- Délimitation de zones (dessin polygonal)
+- Plot de points (capteurs, échantillons)
+- Extraction d’informations : composition chimique et physique
+- Affichage des couches NDVI / EVI / historique météo
 
-#### 🛠️ Outils :
+### 📊 Tableau de bord
+- Indicateurs dynamiques (rendement, humidité, anomalies)
+- Recommandations exportables en PDF
+- Historique des analyses par parcelle
 
-* **Python + FastAPI**
-* **PostgreSQL + PostGIS** (données spatiales)
-* **SQLAlchemy + Alembic**
-* **GeoPandas / Rasterio / Shapely** pour les données géospatiales
-* **Celery + Redis** (tâches asynchrones)
-* **Docker** pour le déploiement
-
-#### 🎯 Fonctionnalités :
-
-* Import de données brutes (CSV, GeoTIFF, JSON)
-* Ingestion de données satellites (NDVI, EVI, météo)
-* Nettoyage et conversion d’unités
-* Vérification de cohérence
-* API REST pour le frontend et l’IA
-* Gestion des utilisateurs / rôles
-* Journalisation et sécurité (auth, CORS, logs)
-
-📁 **Structure du dossier**
-
-```
-backend/
-│── app/
-│   ├── main.py
-│   ├── routers/
-│   ├── models/
-│   ├── schemas/
-│   ├── services/
-│   ├── database.py
-│   └── utils/
-│── requirements.txt
-│── Dockerfile
-│── alembic/
-```
+### 💬 Module Chat / LLM
+- Interaction directe avec le moteur IA via chat
+- Réponses personnalisées selon les données de la parcelle sélectionnée
 
 ---
 
-### 3. **AI / ML — Responsable Intelligence Artificielle**
+## 🔧 Commandes utiles
+```bash
+# Installation
+npm install
 
-**Objectif :** Créer les modèles d’analyse, de prédiction et de recommandation.
+# Lancer en mode développement
+npm run dev
 
-#### 🛠️ Outils :
+# Build production
+npm run build
 
-* **Python (Scikit-learn, PyTorch, TensorFlow, XGBoost)**
-* **GeoPandas, Rasterio, NumPy, Pandas**
-* **Hugging Face Transformers**
-* **LangChain + vLLM / Ollama**
-* **Fine-tuning local LLM (LLaMA, Mistral, Falcon)**
-* **FastAPI (pour exposer les modèles)**
+🔗 API Connexions
 
-#### 🎯 Fonctionnalités :
+Backend (FastAPI) → http://localhost:8000/api
 
-* Classification des sols
-* Prédiction des rendements
-* Détection d’anomalies (stress hydrique, maladie)
-* Segmentation d’images satellite
-* Recommandation agronomique intelligente
-* LLM fine-tuné sur corpus agricole :
+AI Engine (vLLM / FastAPI) → http://localhost:8500
 
-  * interprète les données et répond aux questions en langage naturel
-  * intègre les résultats ML dans ses réponses
-* API d’inférence (`/predict`, `/recommend`, `/chat`)
+📦 Bonnes pratiques
 
-📁 **Structure du dossier**
+Utiliser TypeScript strict ("strict": true)
 
-```
-ai_engine/
-│── notebooks/
-│── models/
-│── data/
-│── src/
-│   ├── preprocess/
-│   ├── train/
-│   ├── inference/
-│   └── llm/
-│── api/
-│   └── main.py
-│── requirements.txt
-│── Dockerfile
-```
+Organiser le code en composants atomiques
 
----
+Garder la carte comme composant central (<MapView />)
 
-## 🔄 Communication entre modules
+Séparer logique et UI
 
-* **Frontend ↔ Backend :** via API REST (Axios)
-* **Backend ↔ AI :** via endpoints `/predict`, `/recommend`
-* **Base de données commune :** PostgreSQL/PostGIS
-* **Données satellite :** via API SentinelHub ou fichiers GeoTIFF
+✨ Objectif de la partie Frontend
 
----
-
-## 🧱 Déploiement & Collaboration GitHub
-
-### 🔧 Étapes de mise en place
-
-1. **Créer un repo principal :**
-
-   ```bash
-   git init agrisense
-   cd agrisense
-   ```
-
-2. **Ajouter les sous-projets :**
-
-   ```bash
-   git submodule add ./frontend
-   git submodule add ./backend
-   git submodule add ./ai_engine
-   ```
-
-3. **Chaque équipe travaille sur sa branche :**
-
-   * `frontend-dev`
-   * `backend-dev`
-   * `ai-dev`
-
-4. **Push des branches séparées :**
-
-   ```bash
-   git checkout -b frontend-dev
-   git add .
-   git commit -m "Frontend initial setup"
-   git push origin frontend-dev
-   ```
-
-5. **Merge final dans `main` après validation :**
-
-   ```bash
-   git checkout main
-   git merge frontend-dev
-   git merge backend-dev
-   git merge ai-dev
-   ```
-
-6. **Déploiement avec Docker Compose :**
-
-   ```yaml
-   version: '3.9'
-   services:
-     backend:
-       build: ./backend
-       ports: ["8000:8000"]
-     frontend:
-       build: ./frontend
-       ports: ["5173:5173"]
-     ai_engine:
-       build: ./ai_engine
-       ports: ["8500:8500"]
-     db:
-       image: postgis/postgis
-       ports: ["5432:5432"]
-       environment:
-         POSTGRES_USER: admin
-         POSTGRES_PASSWORD: admin
-         POSTGRES_DB: agrisense
-   ```
-
----
-
-## 🧠 Exemple de flux complet
-
-1. L’agriculteur se connecte au **tableau de bord**.
-2. Il **sélectionne une parcelle** sur la carte.
-3. Le **backend** interroge PostGIS et renvoie les données sol/météo.
-4. Le **module AI** exécute une prédiction (rendement, anomalies).
-5. Le **LLM** formule une recommandation textuelle (“Augmenter l’irrigation de 10%”).
-6. Le **frontend** affiche les cartes et recommandations.
-
----
-
-## 🌍 Objectif final
-
-> Créer une solution **open-source**, modulaire et extensible
-> pour la **gestion intelligente des exploitations agricoles**,
-> adaptée au **contexte africain**.
-
-
+Fournir une expérience fluide, claire et réactive
+pour explorer les données spatiales et suivre les recommandations IA.
