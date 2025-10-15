@@ -1,259 +1,89 @@
 # SoilAdvisor
-Parfait 💪 voici le **README complet et structuré** que tu pourras utiliser dans ton **GitHub**.
-Il explique comment organiser ton projet en **3 parties (Frontend, Backend, AI)**, comment les **collaborateurs travaillent**, et comment faire le **merge final**.
 
 ---
 
-# 🌾 AgriSense — Plateforme d’Analyse et d’Optimisation Agricole
+## 🧠 3️⃣ AI ENGINE — `ai_engine/README.md`
 
-### 🚀 Description générale
+```markdown
+# 🤖 AgriSense AI Engine — Intelligence Artificielle & LLM
 
-**AgriSense** est une plateforme open-source pour l’analyse, la visualisation et la recommandation intelligente dans le domaine agricole.
-Elle combine **cartographie interactive**, **analyse de données spatiales**, **machine learning**, et **LLM fine-tuné** pour offrir des recommandations agronomiques aux producteurs.
-
----
-
-## 🧩 Architecture Globale
-
-```
-Frontend (React + TS + Tailwind)
-        ↓
-Backend (FastAPI + Postgres/PostGIS)
-        ↓
-AI/ML Engine (Python, ML, LLM)
-```
+## 🎯 Objectif
+Développer et déployer les modèles d’analyse, de prédiction et de recommandation IA pour les cultures agricoles.
 
 ---
 
-## 👥 Organisation du projet (3 responsables)
-
-### 1. **FRONTEND — Responsable Interface Utilisateur**
-
-**Objectif :** Créer une interface moderne, intuitive et interactive pour les utilisateurs (agriculteurs, techniciens, chercheurs).
-
-#### 🛠️ Outils :
-
-* **React.js + TypeScript**
-* **TailwindCSS**
-* **Leaflet.js / MapLibre** pour la cartographie interactive
-* **Axios** pour la communication API
-* **Recharts / Chart.js** pour les indicateurs
-* **Vite** (build rapide)
-
-#### 🎯 Fonctionnalités :
-
-* Authentification (JWT)
-* Tableau de bord (indicateurs, tendances)
-* Carte interactive :
-
-  * Délimiter une parcelle
-  * Plotter des points
-  * Extraire les infos (composition chimique, physique)
-  * Cliquer pour lire les analyses et historiques
-* Section “Recommandations” :
-
-  * Conseils d’irrigation, fertilisation, etc.
-  * Téléchargement de rapports PDF
-
-📁 **Structure du dossier**
-
-```
-frontend/
-│── src/
-│   ├── components/
-│   ├── pages/
-│   ├── services/
-│   ├── hooks/
-│   ├── types/
-│   ├── App.tsx
-│   └── main.tsx
-│── package.json
-│── tailwind.config.js
-│── tsconfig.json
-```
+## ⚙️ Stack Technique
+- **Python 3.11+**
+- **PyTorch / TensorFlow**
+- **Scikit-learn / XGBoost**
+- **GeoPandas, Rasterio, NumPy, Pandas**
+- **Hugging Face Transformers**
+- **LangChain + vLLM / Ollama**
+- **FastAPI** (serveur d’inférence)
 
 ---
 
-### 2. **BACKEND — Responsable Données & Services**
-
-**Objectif :** Gérer la base de données, les APIs et l’intégration des sources (satellite, import, etc.).
-
-#### 🛠️ Outils :
-
-* **Python + FastAPI**
-* **PostgreSQL + PostGIS** (données spatiales)
-* **SQLAlchemy + Alembic**
-* **GeoPandas / Rasterio / Shapely** pour les données géospatiales
-* **Celery + Redis** (tâches asynchrones)
-* **Docker** pour le déploiement
-
-#### 🎯 Fonctionnalités :
-
-* Import de données brutes (CSV, GeoTIFF, JSON)
-* Ingestion de données satellites (NDVI, EVI, météo)
-* Nettoyage et conversion d’unités
-* Vérification de cohérence
-* API REST pour le frontend et l’IA
-* Gestion des utilisateurs / rôles
-* Journalisation et sécurité (auth, CORS, logs)
-
-📁 **Structure du dossier**
-
-```
-backend/
-│── app/
-│   ├── main.py
-│   ├── routers/
-│   ├── models/
-│   ├── schemas/
-│   ├── services/
-│   ├── database.py
-│   └── utils/
-│── requirements.txt
-│── Dockerfile
-│── alembic/
-```
-
----
-
-### 3. **AI / ML — Responsable Intelligence Artificielle**
-
-**Objectif :** Créer les modèles d’analyse, de prédiction et de recommandation.
-
-#### 🛠️ Outils :
-
-* **Python (Scikit-learn, PyTorch, TensorFlow, XGBoost)**
-* **GeoPandas, Rasterio, NumPy, Pandas**
-* **Hugging Face Transformers**
-* **LangChain + vLLM / Ollama**
-* **Fine-tuning local LLM (LLaMA, Mistral, Falcon)**
-* **FastAPI (pour exposer les modèles)**
-
-#### 🎯 Fonctionnalités :
-
-* Classification des sols
-* Prédiction des rendements
-* Détection d’anomalies (stress hydrique, maladie)
-* Segmentation d’images satellite
-* Recommandation agronomique intelligente
-* LLM fine-tuné sur corpus agricole :
-
-  * interprète les données et répond aux questions en langage naturel
-  * intègre les résultats ML dans ses réponses
-* API d’inférence (`/predict`, `/recommend`, `/chat`)
-
-📁 **Structure du dossier**
-
-```
+## 📁 Structure du projet
 ai_engine/
-│── notebooks/
-│── models/
-│── data/
-│── src/
-│   ├── preprocess/
-│   ├── train/
-│   ├── inference/
-│   └── llm/
-│── api/
-│   └── main.py
-│── requirements.txt
-│── Dockerfile
-```
+├── notebooks/ # Expérimentations Jupyter
+├── data/ # Données d’entraînement
+├── models/ # Modèles enregistrés
+├── src/
+│ ├── preprocess/ # Nettoyage et formatage
+│ ├── train/ # Scripts d'entraînement ML
+│ ├── inference/ # Prédictions
+│ └── llm/ # Fine-tuning LLM (Mistral, LLaMA)
+├── api/
+│ └── main.py # API FastAPI exposant les modèles
+└── requirements.txt
+
 
 ---
 
-## 🔄 Communication entre modules
+## 🧭 Fonctionnalités principales
 
-* **Frontend ↔ Backend :** via API REST (Axios)
-* **Backend ↔ AI :** via endpoints `/predict`, `/recommend`
-* **Base de données commune :** PostgreSQL/PostGIS
-* **Données satellite :** via API SentinelHub ou fichiers GeoTIFF
+### 🌱 Machine Learning
+- **Classification des sols**
+- **Prédiction de rendement**
+- **Détection d’anomalies / stress hydrique**
+- **Segmentation d’images satellite**
 
----
+### 💬 LLM Fine-tuné
+- Modèle : `Mistral-7B` ou `LLaMA 3`
+- Corpus : documents agricoles, rapports FAO, fiches techniques
+- Fonction : interpréter et expliquer les résultats ML
+- Connecté au frontend via endpoint `/chat`
 
-## 🧱 Déploiement & Collaboration GitHub
-
-### 🔧 Étapes de mise en place
-
-1. **Créer un repo principal :**
-
-   ```bash
-   git init agrisense
-   cd agrisense
-   ```
-
-2. **Ajouter les sous-projets :**
-
-   ```bash
-   git submodule add ./frontend
-   git submodule add ./backend
-   git submodule add ./ai_engine
-   ```
-
-3. **Chaque équipe travaille sur sa branche :**
-
-   * `frontend-dev`
-   * `backend-dev`
-   * `ai-dev`
-
-4. **Push des branches séparées :**
-
-   ```bash
-   git checkout -b frontend-dev
-   git add .
-   git commit -m "Frontend initial setup"
-   git push origin frontend-dev
-   ```
-
-5. **Merge final dans `main` après validation :**
-
-   ```bash
-   git checkout main
-   git merge frontend-dev
-   git merge backend-dev
-   git merge ai-dev
-   ```
-
-6. **Déploiement avec Docker Compose :**
-
-   ```yaml
-   version: '3.9'
-   services:
-     backend:
-       build: ./backend
-       ports: ["8000:8000"]
-     frontend:
-       build: ./frontend
-       ports: ["5173:5173"]
-     ai_engine:
-       build: ./ai_engine
-       ports: ["8500:8500"]
-     db:
-       image: postgis/postgis
-       ports: ["5432:5432"]
-       environment:
-         POSTGRES_USER: admin
-         POSTGRES_PASSWORD: admin
-         POSTGRES_DB: agrisense
-   ```
+### 🔗 Endpoints API
+- `/predict` → exécute une prédiction (rendement, sol, NDVI)
+- `/recommend` → génère une recommandation textuelle
+- `/chat` → interaction utilisateur-LLM
 
 ---
 
-## 🧠 Exemple de flux complet
+## 🔧 Commandes utiles
+```bash
+# Créer l’environnement
+python -m venv venv
+source venv/bin/activate
 
-1. L’agriculteur se connecte au **tableau de bord**.
-2. Il **sélectionne une parcelle** sur la carte.
-3. Le **backend** interroge PostGIS et renvoie les données sol/météo.
-4. Le **module AI** exécute une prédiction (rendement, anomalies).
-5. Le **LLM** formule une recommandation textuelle (“Augmenter l’irrigation de 10%”).
-6. Le **frontend** affiche les cartes et recommandations.
+# Installer les dépendances
+pip install -r requirements.txt
 
----
+# Lancer le serveur IA
+uvicorn api.main:app --reload --port 8500
 
-## 🌍 Objectif final
+🧠 Bonnes pratiques
 
-> Créer une solution **open-source**, modulaire et extensible
-> pour la **gestion intelligente des exploitations agricoles**,
-> adaptée au **contexte africain**.
+Sauvegarder les modèles dans /models
 
+Journaliser les résultats de prédiction
 
+Utiliser GPU pour l’entraînement local si possible
+
+Fine-tuning avec HuggingFace PEFT (efficace sur petit hardware)
+
+✨ Objectif de la partie AI Engine
+
+Transformer les données spatiales en connaissances exploitables,
+grâce à une IA explicable et adaptée au contexte agricole.
