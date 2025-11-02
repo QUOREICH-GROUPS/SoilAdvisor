@@ -1,56 +1,55 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from typing import List
-import app
-from app.database.base import SessionLocal
-from app.models.parcelle import Parcelle
+from uuid import UUID
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.database.session import get_db
 from app.schemas.parcelle import ParcelleCreate, ParcelleResponse
-router = APIRouter()
-# Dépendance pour obtenir la session de base de données
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-        
-        
-# ENDPOINTS PARCELLES
-@app.post("/parcelles", response_model=ParcelleResponse)
-def creer_parcelle(parcelle: ParcelleCreate, db: Session = Depends(get_db)):
-    db_parcelle = Parcelle(**parcelle.dict())
-    db.add(db_parcelle)
-    db.commit()
-    db.refresh(db_parcelle)
-    return db_parcelle
+from app.services.parcelle_service import (
+    creer_parcelle,
+    lister_parcelles_service,
+    obtenir_parcelle_service,
+    mettre_a_jour_parcelle_service,
+    supprimer_parcelle_service
+)
+ # AsyncSession
 
-@app.get("/parcelles", response_model=List[ParcelleResponse])
-def lister_parcelles(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    return db.query(Parcelle).offset(skip).limit(limit).all()
+router = APIRouter(prefix="/api/v1/parcelles", tags=["Parcelles"])
 
-@app.get("/parcelles/{parcelle_id}", response_model=ParcelleResponse)
-def obtenir_parcelle(parcelle_id: int, db: Session = Depends(get_db)):
-    db_parcelle = db.query(Parcelle).filter(Parcelle.id == parcelle_id).first()
-    if not db_parcelle:
+# -------------------------------
+# Lister les parcelles
+# -------------------------------
+@router.get("/", response_model=List[ParcelleResponse])
+async def lister_parcelles(skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_db)):
+    return await lister_parcelles_service(db, skip, limit)
+
+# -------------------------------
+# Obtenir une parcelle par ID
+# -------------------------------
+@router.get("/{parcelle_id}", response_model=ParcelleResponse)
+async def obtenir_parcelle(parcelle_id: UUID, db: AsyncSession = Depends(get_db)):
+    parcelle = await obtenir_parcelle_service(db, parcelle_id)
+    if not parcelle:
         raise HTTPException(status_code=404, detail="Parcelle non trouvée")
-    return db_parcelle
+    return parcelle
 
-@app.put("/parcelles/{parcelle_id}", response_model=ParcelleResponse)
-def mettre_a_jour_parcelle(parcelle_id: int, parcelle: ParcelleCreate, db: Session = Depends(get_db)):
-    db_parcelle = db.query(Parcelle).filter(Parcelle.id == parcelle_id).first()
-    if not db_parcelle:
-        raise HTTPException(status_code=404, detail="Parcelle non trouvée")
-    for key, value in parcelle.dict().items():
-        setattr(db_parcelle, key, value)
-    db.commit()
-    db.refresh(db_parcelle)
-    return db_parcelle
+# -------------------------------
+# Créer une parcelle
+# -------------------------------
+@router.post("/", response_model=ParcelleResponse)
+async def creer_parcelle_endpoint(parcelle: ParcelleCreate, db: AsyncSession = Depends(get_db)):
+    return await creer_parcelle(db, parcelle)
 
-@app.delete("/parcelles/{parcelle_id}")
-def supprimer_parcelle(parcelle_id: int, db: Session = Depends(get_db)):
-    db_parcelle = db.query(Parcelle).filter(Parcelle.id == parcelle_id).first()
-    if not db_parcelle:
-        raise HTTPException(status_code=404, detail="Parcelle non trouvée")
-    db.delete(db_parcelle)
-    db.commit()
-    return {"message": "Parcelle supprimée"}
+# -------------------------------
+# Mettre à jour une parcelle
+# -------------------------------
+@router.put("/{parcelle_id}", response_model=ParcelleResponse)
+async def mettre_a_jour_parcelle(parcelle_id: UUID, parcelle: ParcelleCreate, db: AsyncSession = Depends(get_db)):
+    return await mettre_a_jour_parcelle_service(db, parcelle_id, parcelle)
+
+# -------------------------------
+# Supprimer une parcelle
+# -------------------------------
+@router.delete("/{parcelle_id}")
+async def supprimer_parcelle(parcelle_id: UUID, db: AsyncSession = Depends(get_db)):
+    return await supprimer_parcelle_service(db, parcelle_id)

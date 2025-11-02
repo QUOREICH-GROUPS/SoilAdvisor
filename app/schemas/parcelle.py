@@ -4,7 +4,7 @@ from typing import Optional
 # Schémas Pydantic
 class ParcelleCreate(BaseModel):
     nom: str
-    proprietaire_id: int
+    #proprietaire_id: int
     surface_ha: float
     geom: Optional[str] = None
 

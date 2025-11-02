@@ -1,8 +1,9 @@
+from uuid import UUID
 from pydantic import BaseModel
 from datetime import datetime
 
 class AnalyseSolCreate(BaseModel):
-    parcelle_id: int
+    parcelle_id: UUID
     ph: float
     n: float
     p: float

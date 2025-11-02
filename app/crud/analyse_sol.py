@@ -1,19 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.database.base import SessionLocal
+from app.main import get_db
 from app.models.analyse_sol import AnalyseSol
 from app.models.parcelle import Parcelle
 from app.schemas.analyse_sol import AnalyseSolCreate, AnalyseSolResponse
 router = APIRouter()
 import app
-# Dépendance pour obtenir la session de base de données
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close() 
+
 
 # ENDPOINTS ANALYSES SOL
 @app.post("/analyses-sol", response_model=AnalyseSolResponse)
