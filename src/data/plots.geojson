@@ -1,0 +1,15 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "id": "P1", "name": "Parcelle 1", "ndvi": 0.72, "ph": 6.4, "N": 1.2, "P": 0.9, "K": 0.8 },
+      "geometry": { "type": "Polygon", "coordinates": [[[2.34,48.86],[2.342,48.863],[2.345,48.861],[2.344,48.859],[2.34,48.86]]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "id": "P2", "name": "Parcelle 2", "ndvi": 0.39, "ph": 5.8, "N": 0.6, "P": 0.4, "K": 0.5 },
+      "geometry": { "type": "Polygon", "coordinates": [[[2.348,48.862],[2.351,48.865],[2.353,48.863],[2.349,48.860],[2.348,48.862]]] }
+    }
+  ]
+}
